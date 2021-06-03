@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import ar.adriano.bdasecovid.TabelaEnfermeiro
 import ar.adriano.bdasecovid.TabelaPacientes
+import ar.adriano.bdasecovid.TabelaResultadoTestes
 
 
 class BdPacientesOpenHelper (context: Context?)
@@ -17,8 +18,9 @@ class BdPacientesOpenHelper (context: Context?)
      */
     override fun onCreate(db: SQLiteDatabase?) {
         if (db != null) {
-           TabelaEnfermeiro(db).cria()
-          TabelaPacientes(db).cria()
+            TabelaEnfermeiro(db).cria()
+            TabelaPacientes(db).cria()
+            TabelaResultadoTestes(db).cria()
 
         }
     }
