@@ -4,12 +4,13 @@ import android.content.ContentValues
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.provider.BaseColumns
+import ar.adriano.bdcovid2021.TabelaCategoriaEnfermeiro
 
 class TabelaEnfermeiro (db: SQLiteDatabase) {
     private val db: SQLiteDatabase = db
 
     fun cria() {
-        db.execSQL("CREATE TABLE $NOME_TABLE (${BaseColumns._ID} INTEGER PRIMARY KEY AUTOINCREMENT,  $NOME_ENFERMEIRO TEXT NOT NULL,   $DATA_TESTE TEXT NOT NULL, $SEXO TEXT NOT NULL, $CIDADE TEXT NOT NULL ,$CONTACTO TEXT NOT NULL)")
+        db.execSQL("CREATE TABLE $NOME_TABLE (${BaseColumns._ID} INTEGER PRIMARY KEY AUTOINCREMENT,  $NOME_ENFERMEIRO TEXT NOT NULL, $IDCATEGORIAENFERMEIROS  INTEGER NOT NULL, $DATA_TESTE TEXT NOT NULL, $SEXO TEXT NOT NULL, $CIDADE TEXT NOT NULL ,$CONTACTO TEXT NOT NULL,FOREIGN KEY(${IDCATEGORIAENFERMEIROS} ) REFERENCES ${TabelaCategoriaEnfermeiro.NOME_TABELA})")
     }
 
     fun insert(values: ContentValues): Long {
@@ -42,6 +43,7 @@ class TabelaEnfermeiro (db: SQLiteDatabase) {
         const val DATA_TESTE = "DATA"
         const val CONTACTO = "CONTACTO"
         const val CIDADE = "CIDADE"
+        const val IDCATEGORIAENFERMEIROS = "id_categoriaEnfermeiro"
         val TODAS_COLUNAS = arrayOf(BaseColumns._ID, NOME_ENFERMEIRO )
     }
 }
