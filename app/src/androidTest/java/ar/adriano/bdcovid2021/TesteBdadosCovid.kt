@@ -11,18 +11,11 @@ import org.junit.runner.RunWith
 import org.junit.Assert.*
 import org.junit.Before
 
-/**
- * Instrumented test, which will execute on an Android device.
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
 @RunWith(AndroidJUnit4::class)
 class TesteBdadosCovid {
     private fun getAppContext() = InstrumentationRegistry.getInstrumentation().targetContext
 
     private fun getBdPacientesOpenHelper() = BdPacientesOpenHelper(getAppContext())
-
- //   private fun getTabelaEnfermeiro(SQLiteDatabase db) = TabelaEnfermeiro(db)
 
     private fun insereEnfermeiroNaBd(tabela: TabelaEnfermeiro, enfermeiro: Enfermeiro): Long {
     val id = tabela.insert(enfermeiro.toContentValues())
@@ -86,6 +79,17 @@ class TesteBdadosCovid {
         assertEquals(1,AlterarRegistos)
 
         db.close()
+    }
+
+    fun ConsegueEliminarDadosEnfermeiros(){
+
+        val db = getBdPacientesOpenHelper().writableDatabase
+        val tabelaEnfermeiro = TabelaEnfermeiro(db)
+
+        val enfermeiro = Enfermeiro(nome = "Enfemeiro",sexo = "M",cidade = "Cidade")
+        enfermeiro.id = insereEnfermeiroNaBd(tabelaEnfermeiro,enfermeiro)
+
+
     }
 
 }

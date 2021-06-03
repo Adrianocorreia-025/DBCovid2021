@@ -21,6 +21,7 @@ class BdPacientesOpenHelper (context: Context?)
             TabelaEnfermeiro(db).cria()
             TabelaPacientes(db).cria()
             TabelaResultadoTestes(db).cria()
+            TabelaCategoriaEnfermeiro(db).cria()
 
         }
     }
