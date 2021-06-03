@@ -3,6 +3,8 @@ package ar.adriano.bdcovid2021
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import ar.adriano.bdasecovid.TabelaEnfermeiro
+import ar.adriano.bdasecovid.TabelaPacientes
 
 
 class BdPacientesOpenHelper (context: Context?)
@@ -15,9 +17,9 @@ class BdPacientesOpenHelper (context: Context?)
      */
     override fun onCreate(db: SQLiteDatabase?) {
         if (db != null) {
-      //      TabelaPacientes(db).cria()
-      //      TabelaResultadoTestes(db).cria()
-       //     TabelaEnfermeiro(db).cria()
+           TabelaEnfermeiro(db).cria()
+          TabelaPacientes(db).cria()
+
         }
     }
 
