@@ -1,5 +1,6 @@
 package ar.adriano.bdcovid2021
 
+import android.provider.BaseColumns
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ar.adriano.bdasecovid.TabelaEnfermeiro
@@ -23,8 +24,15 @@ class TesteBdadosCovid {
 
  //   private fun getTabelaEnfermeiro(SQLiteDatabase db) = TabelaEnfermeiro(db)
 
+    private fun insereEnfermeiroNaBd(tabela: TabelaEnfermeiro, enfermeiro: Enfermeiro): Long {
+    val id = tabela.insert(enfermeiro.toContentValues())
+        assertNotEquals(-1,id)
 
- @Before
+        return id
+
+    }
+
+            @Before
  fun ApagarBDados(){
 
      getAppContext().deleteDatabase(BdPacientesOpenHelper.NOME_BASE_DADOS)
@@ -40,22 +48,44 @@ class TesteBdadosCovid {
     }
 
 
-    fun ConsegueInserirEnfermeiros(){
+
+
+    fun ConsegueInserirDadosEnfermeiros(){
+
+        //Escrever na BD
 
         val db = getBdPacientesOpenHelper().writableDatabase
         val tabelaEnfermeiro = TabelaEnfermeiro(db)
 
-        val id = tabelaEnfermeiro.insert(
-            Enfermeiro(
-                nome = "Nome",
-                sexo = "Sexo",
-                cidade = "Cidade"
-            ).toContentValues()
-        )
-            assertNotEquals(-1,id)
+        val enfermeiro = Enfermeiro(nome = "Enfe",sexo = "F",cidade = "City")
+        enfermeiro.id = insereEnfermeiroNaBd(tabelaEnfermeiro,enfermeiro)
+
         db.close()
     }
 
 
+    @Test
+    fun ConsegueAlterarDadosEnfermeiros(){
+
+        val db = getBdPacientesOpenHelper().writableDatabase
+        val tabelaEnfermeiro = TabelaEnfermeiro(db)
+
+        val enfermeiro = Enfermeiro(nome = "Enfemeiro",sexo = "M",cidade = "Cidade")
+        enfermeiro.id = insereEnfermeiroNaBd(tabelaEnfermeiro,enfermeiro)
+
+        enfermeiro.nome = "nome"
+        enfermeiro.sexo= "sexo"
+        enfermeiro.cidade = "nome"
+
+        val AlterarRegistos  = tabelaEnfermeiro.update(
+            enfermeiro.toContentValues(),
+            "${BaseColumns._ID}=?",
+            arrayOf(enfermeiro.id.toString())
+        )
+
+        assertEquals(1,AlterarRegistos)
+
+        db.close()
+    }
 
 }
