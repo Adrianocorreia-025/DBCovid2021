@@ -45,12 +45,14 @@ class TesteBdadosCovid {
         val db = getBdPacientesOpenHelper().writableDatabase
         val tabelaEnfermeiro = TabelaEnfermeiro(db)
 
-      tabelaEnfermeiro.insert(Enfermeiro(
-          nome = "Nome",
-          sexo = "Sexo",
-          cidade = "Cidade"
-      ))
-
+        val id = tabelaEnfermeiro.insert(
+            Enfermeiro(
+                nome = "Nome",
+                sexo = "Sexo",
+                cidade = "Cidade"
+            ).toContentValues()
+        )
+            assertNotEquals(-1,id)
         db.close()
     }
 
